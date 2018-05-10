@@ -1,0 +1,77 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+- url: /api/(.*)
+  script: server.app
+  secure: always
+
+- url: /images
+  static_dir: build/es6-bundled/images
+  secure: always
+
+- url: /node_modules
+  static_dir: build/es6-bundled/node_modules
+  secure: always
+
+- url: /src
+  static_dir: build/es6-bundled/src
+  secure: always
+
+- url: /index.html
+  static_files: build/es6-bundled/index.html
+  upload: build/es6-bundled/index.html
+  secure: always
+
+- url: /manifest.json
+  static_files: build/es6-bundled/manifest.json
+  upload: build/es6-bundled/manifest.json
+  secure: always
+
+- url: /service-worker.js
+  static_files: build/es6-bundled/service-worker.js
+  upload: build/es6-bundled/service-worker.js
+  secure: always
+
+- url: /
+  static_files: build/es6-bundled/index.html
+  upload: build/es6-bundled/index.html
+  secure: always
+  http_headers:
+    Link: '</node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script, </src/components/hn-app.js>;rel=preload;as=script, </src/components/hn-list.js>;rel=preload;as=script, </api/news?page=1>;rel=preload;as=fetch'
+
+- url: '/(new|ask|show|jobs|favorites)'
+  static_files: build/es6-bundled/index.html
+  upload: build/es6-bundled/index.html
+  secure: always
+  http_headers:
+    Link: '</node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script, </src/components/hn-app.js>;rel=preload;as=script, </src/components/hn-list.js>;rel=preload;as=script'
+
+- url: /item
+  static_files: build/es6-bundled/index.html
+  upload: build/es6-bundled/index.html
+  secure: always
+  http_headers:
+    Link: '</node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script, </src/components/hn-app.js>;rel=preload;as=script, </src/components/hn-item.js>;rel=preload;as=script'
+
+- url: /user
+  static_files: build/es6-bundled/index.html
+  upload: build/es6-bundled/index.html
+  secure: always
+  http_headers:
+    Link: '</node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js>;rel=preload;as=script, </src/components/hn-app.js>;rel=preload;as=script, </src/components/hn-user.js>;rel=preload;as=script'
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- build/es5-bundled/
+- build/esm-bundled/
+- images/
+- node_modules/
+- server/
+- src/
